@@ -9,3 +9,126 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Admin {
+    id Int @id @default(autoincrement())
+    username String @unique
+    password String
+    name String
+
+    @@map("admins")
+}
+
+model Donee {
+    id Int @id @default(autoincrement())
+    name String
+    birthdate String
+    contact String?
+    occupation String?
+    rg String?
+    cpf String?
+    addressId Int @default(1)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    donations Donation[]
+    spouse Spouse[]
+    colleagues Colleague[]
+    children Child[]
+    notes Note[]
+
+    address Address @relation(fields: [addressId], references: [id])
+
+    @@map("donees")
+}
+
+model Spouse {
+    id Int @id @default(autoincrement())
+    name String
+    birthdate String
+    contact String?
+    occupation String?
+    rg String?
+    cpf String?
+    doneeId Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    donee Donee @relation(fields: [doneeId], references: [id])
+
+    @@map("spouses")
+}
+
+model Colleague {
+    id Int @id @default(autoincrement())
+    name String
+    contact String?
+    occupation String?
+    rg String?
+    cpf String?
+    doneeId Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    donee Donee @relation(fields: [doneeId], references: [id])
+
+    @@map("colleagues")
+}
+
+model Child {
+    id Int @id @default(autoincrement())
+    name String
+    birthdate String?
+    contact String?
+    doneeId Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    donee Donee @relation(fields: [doneeId], references: [id])
+
+    @@map("children")
+}
+
+model Note {
+    id Int @id @default(autoincrement())
+    note String
+    reminder String?
+    doneeId Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    donee Donee @relation(fields: [doneeId], references: [id])
+
+    @@map("notes")
+}
+
+model Address {
+    id Int @id @default(autoincrement())
+    street String
+    district String
+    number String
+
+    donees Donee[]
+    @@map("adresses")
+}
+
+model Donation {
+    id Int @id @default(autoincrement())
+    quantity Int @default(0)
+    description String?
+    doneeId Int
+    categoryId Int
+
+    category Category @relation(fields: [categoryId], references: [id])
+    donee Donee @relation(fields: [doneeId], references: [id])
+
+    @@map("donations")
+}
+
+model Category {
+    id Int @id @default(autoincrement())
+    category String
+    donations Donation[]
+
+    @@map("categories")
+}

@@ -6,10 +6,7 @@ import "dotenv/config";
 
 const { PORT, HOST } = process.env;
 
-const port = +PORT || 4000;
-const host = HOST || "localhost";
-
 app.get("/", async (req: Request, res: Response) => res.send("API online"));
-app.listen(port, host, () =>
-  AppLog("Server", `Server running on port ${port}`)
+app.listen(+PORT || 4000, HOST || "localhost", () =>
+  AppLog("Server", `Server running on port ${+PORT || 4000}`)
 );

@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { unauthorizedError } from "../utils/errorUtils";
+import * as adminUtils from "../utils/adminUtils";
 import AppLog from "../utils/AppLog";
+import { Admin } from ".prisma/client";
 
 function authValidation(endpoint?: string) {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -13,7 +15,14 @@ function authValidation(endpoint?: string) {
       );
     }
 
-    // you can implement here the auth validation you want to make, like token validation
+    try {
+      const tokenValidation = adminUtils.validateToken(tokenInput);
+      res.locals.admin = tokenValidation as Admin;
+    } catch (err) {
+      throw unauthorizedError("Error trying to validate token");
+    }
+
+    res.locals.header = header;
     AppLog("Middleware", `Header for endpoint ${endpoint} processed`);
     return next();
   };
