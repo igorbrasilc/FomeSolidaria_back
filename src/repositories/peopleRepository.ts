@@ -8,7 +8,7 @@ export async function getDonee(id: number) {
       colleagues: {},
       spouse: {},
       address: {},
-      donations: { include: { category: {} } },
+      donations: { include: { category: {} }, orderBy: { created_at: "desc" } },
       notes: {},
     },
   });
