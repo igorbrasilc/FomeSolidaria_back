@@ -16,13 +16,15 @@ model Admin {
     password String
     name String
 
+    registrations Registration[]
+
     @@map("admins")
 }
 
 model Donee {
     id Int @id @default(autoincrement())
     name String
-    birthdate String
+    birthdate DateTime
     contact String?
     occupation String?
     rg String?
@@ -45,7 +47,7 @@ model Donee {
 model Spouse {
     id Int @id @default(autoincrement())
     name String
-    birthdate String
+    birthdate DateTime
     contact String?
     occupation String?
     rg String?
@@ -78,7 +80,7 @@ model Colleague {
 model Child {
     id Int @id @default(autoincrement())
     name String
-    birthdate String?
+    birthdate DateTime?
     contact String?
     doneeId Int
     created_at DateTime @default(now())
@@ -102,11 +104,22 @@ model Note {
     @@map("notes")
 }
 
+model Registration {
+    id Int @id @default(autoincrement())
+    adminId Int @default(1)
+    donationId Int
+
+    admin Admin @relation(fields: [adminId], references: [id])
+    donation Donation @relation(fields: [donationId], references: [id])
+}
+
 model Address {
     id Int @id @default(autoincrement())
     street String
     district String
     number String
+    city String @default("Itapema")
+    state String @default("Santa Catarina")
 
     donees Donee[]
     @@map("adresses")
@@ -119,6 +132,8 @@ model Donation {
     doneeId Int
     categoryId Int
     created_at DateTime @default(now())
+
+    registration Registration[]
 
     category Category @relation(fields: [categoryId], references: [id])
     donee Donee @relation(fields: [doneeId], references: [id])
