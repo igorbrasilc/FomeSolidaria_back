@@ -18,6 +18,8 @@ const addresses: Omit<Address, "id">[] = [
     district: "N/A",
     number: "N/A",
     street: "N/A",
+    city: "Itapema",
+    state: "Santa Catarina",
   },
 ];
 

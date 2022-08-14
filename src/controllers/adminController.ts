@@ -10,4 +10,4 @@ export async function signIn(req: Request, res: Response) {
 
   AppLog("Controller", "Admin logged in");
   res.status(200).send({ token });
-}
+} 
