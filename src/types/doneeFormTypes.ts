@@ -22,7 +22,19 @@ export default interface DoneeFormData {
     rg: string | null;
     cpf: string | null;
   }[];
+  colleague?: {
+    name: string;
+    contact: string | null;
+    occupation: string | null;
+    rg: string | null;
+    cpf: string | null;
+  }[];
   children: {
+    name: string;
+    birthdate: Date | null;
+    contact: string | null;
+  }[];
+  child?: {
     name: string;
     birthdate: Date | null;
     contact: string | null;

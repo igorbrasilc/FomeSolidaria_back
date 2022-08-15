@@ -34,7 +34,7 @@ model Donee {
     updated_at DateTime @updatedAt
 
     donations Donation[]
-    spouse Spouse[]
+    spouse Spouse?
     colleagues Colleague[]
     children Child[]
     notes Note[]
@@ -52,7 +52,7 @@ model Spouse {
     occupation String?
     rg String?
     cpf String?
-    doneeId Int
+    doneeId Int @unique
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 

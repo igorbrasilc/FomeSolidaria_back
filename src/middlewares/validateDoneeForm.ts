@@ -7,43 +7,42 @@ import DoneeFormData from "../types/doneeFormTypes";
 
 function validateDoneeForm(endpoint: string) {
   return (req: Request, res: Response, next: NextFunction) => {
-    const { colleagues, donee, address, children, spouse, note } =
-      req.body as DoneeFormData;
+    const { colleagues, donee, address, children, spouse, note } = req.body;
 
     const notNullInputs = {};
 
     const colleaguesIsNull =
-      colleagues.length === 0 || colleagues[0].name === "";
+      colleagues.length === 0 || colleagues[0].name === null;
 
     if (!colleaguesIsNull) {
-      notNullInputs["colleague"] = colleagues;
+      notNullInputs["colleagues"] = colleagues;
     }
 
-    const doneeIsNull = donee.name === "";
+    const doneeIsNull = !donee.name;
 
     if (!doneeIsNull) {
       notNullInputs["donee"] = donee;
     }
 
-    const addressIsNull = address.street === "";
+    const addressIsNull = !address.street;
 
     if (!addressIsNull) {
       notNullInputs["address"] = address;
     }
 
-    const childrenIsNull = children.length === 0 || children[0].name === "";
+    const childrenIsNull = children.length === 0;
 
     if (!childrenIsNull) {
-      notNullInputs["child"] = children;
+      notNullInputs["children"] = children;
     }
 
-    const spouseIsNull = spouse.name === "";
+    const spouseIsNull = !spouse.name;
 
     if (!spouseIsNull) {
       notNullInputs["spouse"] = spouse;
     }
 
-    const noteIsNull = note.note === "";
+    const noteIsNull = !note.note;
 
     if (!noteIsNull) {
       notNullInputs["note"] = note;
