@@ -8,7 +8,21 @@ export async function getDonee(id: number) {
       colleagues: {},
       spouse: {},
       address: {},
-      donations: { include: { category: {} }, orderBy: { created_at: "desc" } },
+      donations: {
+        include: {
+          category: {},
+          registration: {
+            include: {
+              admin: {
+                select: {
+                  username: true,
+                },
+              },
+            },
+          },
+        },
+        orderBy: { created_at: "desc" },
+      },
       notes: {},
     },
   });
