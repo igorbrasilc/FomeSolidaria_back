@@ -11,8 +11,7 @@ function validateDoneeForm(endpoint: string) {
 
     const notNullInputs = {};
 
-    const colleaguesIsNull =
-      colleagues.length === 0 || colleagues[0].name === null;
+    const colleaguesIsNull = !colleagues;
 
     if (!colleaguesIsNull) {
       notNullInputs["colleagues"] = colleagues;
@@ -30,7 +29,7 @@ function validateDoneeForm(endpoint: string) {
       notNullInputs["address"] = address;
     }
 
-    const childrenIsNull = children.length === 0;
+    const childrenIsNull = !children;
 
     if (!childrenIsNull) {
       notNullInputs["children"] = children;

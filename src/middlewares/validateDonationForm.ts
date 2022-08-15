@@ -13,7 +13,7 @@ function validateDonationForm(endpoint: string) {
       notNullInputs["donation"] = donation;
     }
 
-    const noteIsNull = !note.note;
+    const noteIsNull = !note || !note.note;
 
     if (!noteIsNull) {
       notNullInputs["note"] = note;

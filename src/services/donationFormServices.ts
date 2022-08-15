@@ -20,7 +20,7 @@ export async function postDonation(
   );
   AppLog("Service", "Donation created");
 
-  if (inputs.note.note) {
+  if (inputs.note?.note) {
     AppLog("Service", "Note found");
     await repository.createNote(inputs.note, doneeId);
     AppLog("Service", "Note created");
